@@ -2,7 +2,7 @@ name: Regression_Flow
 
 on:
   schedule:
-    - cron: '*/50 0-23 * * *'
+    - cron: '*/45 0-23 * * *'
 
 jobs:
   runtests:
