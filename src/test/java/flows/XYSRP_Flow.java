@@ -55,9 +55,9 @@ public class XYSRP_Flow {
 	    List<Database> databaseList = Arrays.asList(databaseArray);
 
 	    // Ensure there are at least 40 routes to avoid IndexOutOfBoundsException
-	    if (databaseList.size() >= 91) {
+	    if (databaseList.size() >= 78) {
 	        // Get routes from 31st to 40th (index 30 to 39)
-	        List<Database> limitedDatabaseList = databaseList.subList(40, 91);
+	        List<Database> limitedDatabaseList = databaseList.subList(40, 78);
 
 	        // Print the routes first
 	        for (Database data : limitedDatabaseList) {
