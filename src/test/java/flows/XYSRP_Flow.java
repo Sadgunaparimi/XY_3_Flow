@@ -55,9 +55,9 @@ public class XYSRP_Flow {
 	    List<Database> databaseList = Arrays.asList(databaseArray);
 
 	    // Ensure there are at least 40 routes to avoid IndexOutOfBoundsException
-	    if (databaseList.size() >= 78) {
+	    if (databaseList.size() >= 76) {
 	        // Get routes from 31st to 40th (index 30 to 39)
-	        List<Database> limitedDatabaseList = databaseList.subList(40, 78);
+	        List<Database> limitedDatabaseList = databaseList.subList(40, 76);
 
 	        // Print the routes first
 	        for (Database data : limitedDatabaseList) {
@@ -65,16 +65,7 @@ public class XYSRP_Flow {
 	        }
 	        
 	        for (Database data : limitedDatabaseList) {
-	            if ("CAI".equals(data.To)) {
-	                data.To = "EG1";
-	            } else if ("CAI".equals(data.From)) {
-	                data.From = "EG1";
-	            }
-	            if ("DXB".equals(data.To)) {
-	                data.To = "AE1";
-	            } else if ("DXB".equals(data.From)) {
-	                data.From = "AE1";
-	            }
+	            
 				try {
 					Date depDate = new SimpleDateFormat("dd MMM yyyy").parse(data.DepartureDate);
 					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

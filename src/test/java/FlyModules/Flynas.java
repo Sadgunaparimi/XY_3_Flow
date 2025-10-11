@@ -76,10 +76,10 @@ public class Flynas extends XYSRP_Flow {
 	                return null; // skip route
 	            } else {
 	                // Normal retry: delete cookies, refresh page
-	                driver.manage().deleteAllCookies();
+	                Flynas.search(driver);
 	                Flynas.search(driver);
 	                driver.get(FlynasURL);
-	                Thread.sleep(4000);
+	                Thread.sleep(6000);
 	                System.out.println("Cookies deleted. Page refreshed.");
 	            }
 	        }
@@ -135,14 +135,6 @@ public class Flynas extends XYSRP_Flow {
 	    From = FromCity.getText();
 	    WebElement ToCity = driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Modify your Search'])[1]/preceding::span[5]"));
 	    To = ToCity.getText();
-
-	    // Replace special airport codes
-	    if ("TR1".equals(From)) { From = "SAW"; PnrDetails.From = "SAW"; }
-	    if ("TR1".equals(To)) { To = "SAW"; PnrDetails.To = "SAW"; }
-	    if ("EG1".equals(From)) { From = "CAI"; PnrDetails.From = "CAI"; }
-	    if ("EG1".equals(To)) { To = "CAI"; PnrDetails.To = "CAI"; }
-	    if ("AE1".equals(From)) { From = "DXB"; PnrDetails.From = "DXB"; }
-	    if ("AE1".equals(To)) { To = "DXB"; PnrDetails.To = "DXB"; }
 
 	    try {
 	        driver.findElement(By.xpath("//a[contains(@class, 'btn_prev')]")).click();
@@ -203,7 +195,27 @@ public class Flynas extends XYSRP_Flow {
 		System.out.println(Flights);
 		NoFlights= Flights.split(" ")[5];*/
 		
-		
+		if ("TR1".equals(From)) {
+		    From = PnrDetails.From;  // TR1 → whatever PNR says: IST or SAW
+		}
+		if ("EG1".equals(From)) {
+		    From = PnrDetails.From;  // EG1 → CAI
+		}
+		if ("AE1".equals(From)) {
+		    From = PnrDetails.From;  // AE1 → DXB
+		}
+
+		// Same for To
+		if ("TR1".equals(To)) {
+		    To = PnrDetails.To;
+		}
+		if ("EG1".equals(To)) {
+		    To = PnrDetails.To;
+		}
+		if ("AE1".equals(To)) {
+		    To = PnrDetails.To;
+		}
+
 		if(From.equals(PnrDetails.From))
 		 { 
 			System.out.println("From City Matched");
@@ -212,28 +224,6 @@ public class Flynas extends XYSRP_Flow {
 			 {
 				System.out.println("To City Matched");
 				
-				if("EG1".equals(PnrDetails.From))
-				 {
-					PnrDetails.From="CAI";
-				 }
-				else if("EG1".equals(PnrDetails.To))
-				 {
-					PnrDetails.To="CAI";
-				 }
-			     else{
-			    	
-			     }
-				if("AE1".equals(PnrDetails.From))
-				 {
-					PnrDetails.From="DXB";
-				 }
-				else if("AE1".equals(PnrDetails.To))
-				 {
-					PnrDetails.To="DXB";
-				 }
-			     else{
-			    	
-			     }
 				
 				XY_FlightDetailsSending_Economy(driver, PnrDetails);
 				
