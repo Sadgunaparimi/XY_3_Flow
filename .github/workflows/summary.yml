@@ -2,8 +2,10 @@ name: Sanity_Flow
 
 on:
   schedule:
-    - cron: '*/30 0-23 * * *'
+    - cron: '*/20 0-23 * * *'
     - cron: '*/30 0-3 * * *'
+  repository_dispatch:
+    types: [sanity_flow_completed]   
 
 jobs:
   runtests:
@@ -61,3 +63,14 @@ jobs:
               exit 1
             fi
           done
+
+      - name: Trigger same workflow again
+        if: ${{ success() }}
+        run: |
+          echo "Triggering Sanity_Flow again..."
+          curl -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            https://api.github.com/repos/${{ github.repository }}/dispatches \
+            -d '{"event_type": "sanity_flow_completed"}'
