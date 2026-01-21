@@ -5,7 +5,7 @@ on:
     - cron: '*/20 0-23 * * *'
     - cron: '*/30 0-3 * * *'
   repository_dispatch:
-    types: [sanity_flow_completed]   
+    types: [sanity_flow_completed]    
 
 jobs:
   runtests:
